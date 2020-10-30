@@ -179,6 +179,13 @@ public:
      */
     void bind(const int aIndex, const void*         apValue, const int aSize);
     /**
+     * @brief Bind a binary blob value to a parameter "?", "?NNN", ":VVV", "@VVV" or "$VVV" in the SQL prepared statement (aIndex >= 1)
+     *
+     * @note Uses the SQLITE_TRANSIENT flag, making a copy of the data, for SQLite internal use
+     * See non owning buffer: basic_string_view https://stackoverflow.com/a/60151658
+     */
+    void bind(const int aIndex, const std::basic_string_view<std::byte>& aValue);
+    /**
      * @brief Bind a string value to a parameter "?", "?NNN", ":VVV", "@VVV" or "$VVV" in the SQL prepared statement (aIndex >= 1).
      *
      * The string can contain null characters as it is binded using its size.

@@ -118,6 +118,12 @@ void Statement::bind(const int aIndex, const void* apValue, const int aSize)
     check(ret);
 }
 
+// Bind a binary blob value to a parameter "?", "?NNN", ":VVV", "@VVV" or "$VVV" in the SQL prepared statement
+void Statement::bind(const int aIndex, const std::basic_string_view<std::byte> &aValue)
+{
+    const int ret = sqlite3_bind_blob(mStmtPtr, aIndex, aValue.data(), aValue.size(), SQLITE_TRANSIENT);
+    check(ret);
+}
 // Bind a string value to a parameter "?", "?NNN", ":VVV", "@VVV" or "$VVV" in the SQL prepared statement
 void Statement::bindNoCopy(const int aIndex, const std::string& aValue)
 {
